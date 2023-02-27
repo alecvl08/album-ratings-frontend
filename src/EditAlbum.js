@@ -61,13 +61,22 @@ function EditAlbum() {
     }
 
     const handleImageChange = event => {
-        setFormData(
-            {
-                ...formData,
-                coverImage: event.target.files[0],
-                coverImageName: event.target.files[0].name
-            }
-        )
+        if (
+            event.target.files[0].type.split('/')[1] !== 'jpeg' &&
+            event.target.files[0].type.split('/')[1] !== 'jpg' &&
+            event.target.files[0].type.split('/')[1] !== 'png'
+        ) {
+            window.alert('Album cover images must be .jpeg, .jpg, or .png')
+        }
+        else {
+            setFormData(
+                {
+                    ...formData,
+                    coverImage: event.target.files[0],
+                    coverImageName: event.target.files[0].name
+                }
+            )
+        }
     }
 
     const handleSubmit = event => {

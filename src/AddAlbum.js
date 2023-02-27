@@ -40,7 +40,6 @@ function AddAlbum() {
     }
 
     const handleImageChange = event => {
-        console.log(event.target.files[0].type.split('/')[1])
         if (
             event.target.files[0].type.split('/')[1] !== 'jpeg' &&
             event.target.files[0].type.split('/')[1] !== 'jpg' &&
