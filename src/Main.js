@@ -23,7 +23,7 @@ function Main() {
     useEffect(
         () => {logout(personid)}, []
     )
-    console.log(personid)
+
     const [albumsList, setAlbumsList] = useState([])
     const getAlbums = (sortField, sortDirection) => {
         Axios.get(apiBasePath + '/getalbums/' + personid + "/" + sortField + "/" + sortDirection)
@@ -299,10 +299,26 @@ function Main() {
                             <button className="button is-white" onClick={() => localStorage.setItem('personid', null)}>Log out</button>
                         </Link>
                     </div>
-                    <div className="column is-half has-text-centered"><h1 className="title is-1 has-text-white">Albums of the Year</h1></div>
+                    <div className="column is-half has-text-centered">
+                        <h1 className="title is-1 has-text-white">Albums of the Year</h1>
+                        <h4 className="title is-4 has-text-white">Demo Mode:</h4>
+                        <div className="box has-text-left">
+                            <div className="content">
+                                <p>
+                                    Editing or deleting albums and ratings added by registered users is disabled
+                                </p>
+                                <p>
+                                    You can add albums and edit, delete, and rate the albums you add
+                                </p>
+                                <p>
+                                    Albums added in Demo Mode will be deleted automatically
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                     <div className="column has-text-right">
                         <Link to='addalbum'>
-                            <button className="button is-white">Add album</button>
+                            <button className="button is-white">Add album (click here to start)</button>
                         </Link>
                     </div>
                 </div>
