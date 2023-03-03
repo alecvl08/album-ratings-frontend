@@ -327,7 +327,7 @@ function Main() {
                     </div>
                     <div className="column has-text-right">
                         <Link to='addalbum'>
-                            <button className="button is-white">Add album (click here to start)</button>
+                            <button className="button is-white">Add album</button>
                         </Link>
                     </div>
                 </div>
