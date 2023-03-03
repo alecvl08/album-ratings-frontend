@@ -19,6 +19,28 @@ function Main() {
     }
     const personid = localStorage.getItem('personid')
     const navigate = useNavigate()
+    const demoModeTitle = personid => {
+        if (personid == -1) {
+            return (
+                <>
+                    <h4 className="title is-4 has-text-white">Demo Mode:</h4>
+                    <div className="box has-text-left">
+                        <div className="content">
+                            <p>
+                                Editing or deleting albums and ratings added by registered users is disabled
+                            </p>
+                            <p>
+                                You can add albums and edit, delete, and rate the albums you add
+                            </p>
+                            <p>
+                                Albums added in Demo Mode will be deleted automatically
+                            </p>
+                        </div>
+                    </div>
+                </>
+            )
+        }
+    }
     const logout = personid => {if(personid === 'null') {navigate('/login')}}
     useEffect(
         () => {logout(personid)}, []
@@ -301,20 +323,7 @@ function Main() {
                     </div>
                     <div className="column is-half has-text-centered">
                         <h1 className="title is-1 has-text-white">Albums of the Year</h1>
-                        <h4 className="title is-4 has-text-white">Demo Mode:</h4>
-                        <div className="box has-text-left">
-                            <div className="content">
-                                <p>
-                                    Editing or deleting albums and ratings added by registered users is disabled
-                                </p>
-                                <p>
-                                    You can add albums and edit, delete, and rate the albums you add
-                                </p>
-                                <p>
-                                    Albums added in Demo Mode will be deleted automatically
-                                </p>
-                            </div>
-                        </div>
+                        {demoModeTitle(personid)}
                     </div>
                     <div className="column has-text-right">
                         <Link to='addalbum'>
