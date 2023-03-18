@@ -38,8 +38,8 @@ function EditAlbum() {
                             {
                                 artist: res.data[0].artist,
                                 title: res.data[0].title,
-                                genre: res.data[0].genre.replace('null',''),
-                                recordLabel: res.data[0].recordlabel.replace('null',''),
+                                genre: res.data[0].genre,
+                                recordLabel: res.data[0].recordlabel,
                                 releaseDate: (res.data[0].releasedate) ? res.data[0].releasedate.substring(0, 10) : '',
                                 coverImageName: 'Current File'
                             }
