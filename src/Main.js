@@ -173,7 +173,7 @@ function Main() {
                                         max="10"
                                         step="0.1"
                                         value={ratings[index] + ''}
-                                        onChange={(e) => handleChange(index, e.target.value)}
+                                        onChange={e => handleChange(index, e.target.value)}
                                         disabled={setDisabledInputs(album.album.addedbypersonid)}
                                         ref={inputRef}
                                     />
@@ -192,7 +192,7 @@ function Main() {
                                                 step="0.1"
                                                 placeholder={album.album.rating}
                                                 value={album.album.rating === ratings[index] ? '' : ratings[index]}
-                                                onChange={(e) => handleChange(index, e.target.value)}
+                                                onChange={e => handleChange(index, e.target.value)}
                                                 disabled={setDisabledInputs(album.album.addedbypersonid)}
                                             />
                                         </div>

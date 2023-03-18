@@ -215,7 +215,6 @@ function AddAlbum() {
                                                 type="file"
                                                 className="file-input"
                                                 name="coverImage"
-                                                //value={formData.coverImage}
                                                 onChange={handleImageChange}
                                             />
                                             <span className="file-cta">
