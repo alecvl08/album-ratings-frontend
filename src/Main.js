@@ -122,7 +122,7 @@ function Main() {
             }
             else {
                 Axios.put(apiBasePath + '/updatescore/' + personid + '/' + albumid + '/' + rating)
-                    .then(() => {getAlbums(sort.field, sort.direction)})
+                    .then(() => getAlbums(sort.field, sort.direction))
             }
         }
         const onHover = blockRef => setShadowState(`5px 5px 5px ${album.album.albumcoverimg_color3}`)
