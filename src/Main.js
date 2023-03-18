@@ -65,9 +65,14 @@ function Main() {
     useEffect(() => getAlbums(sort.field, sort.direction),[sort])
     const RatingsTable = ({ albumid, color1, color2, color3 }) => {
         const [rows, setRows] = useState([])
-        Axios.get(apiBasePath + '/albumratings/' + albumid)
-            .then(res => setRows(res.data))
-            .catch(err => console.error(err))
+        useEffect(
+            () => {
+                Axios.get(apiBasePath + '/albumratings/' + albumid)
+                    .then(res => setRows(res.data))
+                    .catch(err => console.error(err))
+            },
+            [albumid]
+        )
         return (
             <div className="table-container" style={{maxHeight: "150px", overflowY: "scroll"}}>
                 <table className="table is-bordered is-fullwidth" style={{color: color1}}>
@@ -117,7 +122,7 @@ function Main() {
             if (rating < 0 || rating > 10) {
                 window.alert('Ratings must be between 0 and 10')
             }
-            else if (rating === null) {
+            else if (rating == null) {
                 void (0)
             }
             else {
