@@ -9,9 +9,7 @@ function Login() {
 
     const [input, setInput] = useState()
 
-    const handleChange = event => {
-        setInput(event.target.value)
-    }
+    const handleChange = event => setInput(event.target.value)
 
     const handleSubmit = event => {
         event.preventDefault()

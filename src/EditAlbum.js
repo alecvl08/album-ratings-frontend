@@ -14,9 +14,7 @@ function EditAlbum() {
     const personid = localStorage.getItem('personid')
 
     const logout = personid => {if(personid === 'null') {navigate('/login')}}
-    useEffect(
-        () => {logout(personid)}, []
-    )
+    useEffect(() => logout(personid),[])
 
     const { id } = useParams()
     const [formData, setFormData] = useState(
@@ -109,7 +107,7 @@ function EditAlbum() {
                     : void (0)
                 }
             )
-            .catch(err => {console.log(err)})
+            .catch(err => console.log(err))
     }
 
     return (

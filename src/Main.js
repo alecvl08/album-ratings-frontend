@@ -43,7 +43,7 @@ function Main() {
     }
     const logout = personid => {if(personid === 'null') {navigate('/login')}}
     useEffect(
-        () => {logout(personid)}, []
+        () => logout(personid),[]
     )
 
     const [albumsList, setAlbumsList] = useState([])
@@ -65,14 +65,9 @@ function Main() {
     useEffect(() => getAlbums(sort.field, sort.direction),[sort])
     const RatingsTable = ({ albumid, color1, color2, color3 }) => {
         const [rows, setRows] = useState([])
-        useEffect(
-            () => {
-                Axios.get(apiBasePath + '/albumratings/' + albumid)
-                    .then(res => {setRows(res.data)})
-                    .catch(err => {console.error(err)})
-            },
-            [albumid]
-        )
+        Axios.get(apiBasePath + '/albumratings/' + albumid)
+            .then(res => setRows(res.data))
+            .catch(err => console.error(err))
         return (
             <div className="table-container" style={{maxHeight: "150px", overflowY: "scroll"}}>
                 <table className="table is-bordered is-fullwidth" style={{color: color1}}>
@@ -114,9 +109,7 @@ function Main() {
             var confirm = window.confirm('Delete album?')
             confirm ?
                 Axios.delete(apiBasePath + '/deletealbum/' + id)
-                    .then(
-                        () => getAlbums(sort.field, sort.direction)
-                    )
+                    .then(() => getAlbums(sort.field, sort.direction))
                 : void (0)
         }
         const handleSubmit = (event, albumid, rating) => {
@@ -132,8 +125,8 @@ function Main() {
                     .then(() => {getAlbums(sort.field, sort.direction)})
             }
         }
-        const onHover = blockRef => {setShadowState(`5px 5px 5px ${album.album.albumcoverimg_color3}`)}
-        const onLeave = blockRef => {setShadowState("")}
+        const onHover = blockRef => setShadowState(`5px 5px 5px ${album.album.albumcoverimg_color3}`)
+        const onLeave = blockRef => setShadowState("")
         return (
             <div
                 className="block"
@@ -252,7 +245,7 @@ function Main() {
 
                         <button
                             className="button is-danger"
-                            onClick={() => { deletealbum(album.album.albumid) }}
+                            onClick={() => deletealbum(album.album.albumid)}
                             disabled={setDisabledInputs(album.album.addedbypersonid)}
                             style={{ backgroundColor: album.album.albumcoverimg_color2, color: album.album.albumcoverimg_color1 }}
                         >

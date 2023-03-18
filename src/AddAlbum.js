@@ -14,9 +14,7 @@ function AddAlbum() {
     const navigate = useNavigate()
 
     const logout = personid => {if(personid === 'null') {navigate('/login')}}
-    useEffect(
-        () => {logout(personid)}, []
-    )
+    useEffect(() => logout(personid),[])
 
     const [formData, setFormData] = useState(
         {
@@ -88,7 +86,7 @@ function AddAlbum() {
                     : void (0)
                 }
             )
-            .catch(err => {console.log(err)})
+            .catch(err => console.log(err))
     }
     
 
