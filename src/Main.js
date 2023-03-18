@@ -105,7 +105,7 @@ function Main() {
                 return false
             }
         }
-        const deletealbum = (id) => {
+        const deletealbum = id => {
             var confirm = window.confirm('Delete album?')
             confirm ?
                 Axios.delete(apiBasePath + '/deletealbum/' + id)
@@ -117,7 +117,7 @@ function Main() {
             if (rating < 0 || rating > 10) {
                 window.alert('Ratings must be between 0 and 10')
             }
-            else if (rating === "") {
+            else if (rating === null) {
                 void (0)
             }
             else {
