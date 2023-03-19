@@ -182,6 +182,7 @@ function EditAlbum() {
                                             name="genre"
                                             value={formData.genre}
                                             onChange={handleChange}
+                                            required
                                         />
                                     </div>
                                 </div>
@@ -218,6 +219,7 @@ function EditAlbum() {
                                             name="releaseDate"
                                             value={formData.releaseDate}
                                             onChange={handleChange}
+                                            required
                                         />
                                     </div>
                                 </div>
@@ -236,6 +238,7 @@ function EditAlbum() {
                                                 className="file-input"
                                                 name="coverImage"
                                                 onChange={handleImageChange}
+                                                required
                                             />
                                             <span className="file-cta">
                                                 <span className="file-icon">

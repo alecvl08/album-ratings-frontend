@@ -162,6 +162,7 @@ function AddAlbum() {
                                             name="genre"
                                             value={formData.genre}
                                             onChange={handleChange}
+                                            required
                                         />
                                     </div>
                                 </div>
@@ -198,6 +199,7 @@ function AddAlbum() {
                                             name="releaseDate"
                                             value={formData.releaseDate}
                                             onChange={handleChange}
+                                            required
                                         />
                                     </div>
                                 </div>
@@ -216,6 +218,7 @@ function AddAlbum() {
                                                 className="file-input"
                                                 name="coverImage"
                                                 onChange={handleImageChange}
+                                                required
                                             />
                                             <span className="file-cta">
                                                 <span className="file-icon">
