@@ -42,9 +42,7 @@ function Main() {
         }
     }
     const logout = personid => {if(personid === 'null') {navigate('/login')}}
-    useEffect(
-        () => logout(personid),[]
-    )
+    useEffect(() => logout(personid),[])
 
     const [albumsList, setAlbumsList] = useState([])
     const getAlbums = (sortField, sortDirection) => {
@@ -63,16 +61,7 @@ function Main() {
             )
     }
     useEffect(() => getAlbums(sort.field, sort.direction),[sort])
-    const RatingsTable = ({ albumid, color1, color2, color3 }) => {
-        const [rows, setRows] = useState([])
-        useEffect(
-            () => {
-                Axios.get(apiBasePath + '/albumratings/' + albumid)
-                    .then(res => setRows(res.data))
-                    .catch(err => console.error(err))
-            },
-            [albumid]
-        )
+    const RatingsTable = ({ albumid, ratings, color1, color2, color3 }) => {
         return (
             <div className="table-container" style={{maxHeight: "150px", overflowY: "scroll"}}>
                 <table className="table is-bordered is-fullwidth" style={{color: color1}}>
@@ -84,11 +73,11 @@ function Main() {
                     </thead>
                     <tbody style={{backgroundColor: color3}}>
                         {
-                            rows.map(
-                                row => (
-                                    <tr key={albumid + ' ' + row.personname}>
-                                        <td>{row.personname}</td>
-                                        <td>{row.rating}</td>
+                            ratings.map(
+                                rating => (
+                                    <tr key={albumid + ' ' + rating.personname}>
+                                        <td>{rating.personname}</td>
+                                        <td>{rating.rating}</td>
                                     </tr>
                                 )
                             )
@@ -231,6 +220,7 @@ function Main() {
                     <div className="column is-2">
                         <RatingsTable
                             albumid={album.album.albumid}
+                            ratings={album.album.ratings}
                             color1={album.album.albumcoverimg_color1}
                             color2={album.album.albumcoverimg_color2}
                             color3={album.album.albumcoverimg_color3}
