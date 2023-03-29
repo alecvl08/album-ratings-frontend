@@ -238,7 +238,6 @@ function EditAlbum() {
                                                 className="file-input"
                                                 name="coverImage"
                                                 onChange={handleImageChange}
-                                                required
                                             />
                                             <span className="file-cta">
                                                 <span className="file-icon">
