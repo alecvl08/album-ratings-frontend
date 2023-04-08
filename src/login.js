@@ -16,6 +16,7 @@ function Login() {
         Axios.get(apiBasePath + '/getlogin/' + input)
             .then(
                 res => {
+                    console.log(res.data.personid)
                     if (res.data.personid) {
                         localStorage.setItem('personid', JSON.stringify(res.data.personid))
                         navigate('/')
