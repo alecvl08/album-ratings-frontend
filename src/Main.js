@@ -41,9 +41,12 @@ function Main() {
             )
         }
     }
+
+    //if localStorage has personid 'null' on page load, navigate to the login
     const logout = personid => {if(personid === 'null') {navigate('/login')}}
     useEffect(() => logout(personid),[])
 
+    //getAlbums is the driver of this page - called on any sort change or data update - gets list of albums and their ratings
     const [albumsList, setAlbumsList] = useState([])
     const getAlbums = (sortField, sortDirection) => {
         Axios.get(apiBasePath + '/getalbums/' + personid + "/" + sortField + "/" + sortDirection)
@@ -62,6 +65,8 @@ function Main() {
             .catch(() => window.alert('Server error'))
     }
     useEffect(() => getAlbums(sort.field, sort.direction),[sort])
+
+    //This component is the scrollable ratings table for each album
     const RatingsTable = ({ albumid, ratings, color1, color2, color3 }) => {
         return (
             <div className="table-container" style={{maxHeight: "150px", overflowY: "scroll"}}>
@@ -88,28 +93,28 @@ function Main() {
             </div>
         )
     }
+
+    //Component for each album block on the page
     const Album = ({ album, index, ratings, handleChange, handleReset }) => {
         const inputRef = useRef()
         const blockRef = useRef()
         const [shadowState, setShadowState] = useState("")
+
+        //if this is the demo user, block changing albums not added by demo user
         const setDisabledInputs = addedbypersonid => {
-            if (personid == -1 && addedbypersonid != -1) {
-                return true
-            }
-            else {
-                return false
-            }
+            if (personid == -1 && addedbypersonid != -1) {return true}
+            else {return false}
         }
+        //handles deleting an album and refreshing the list
         const deletealbum = id => {
             var confirm = window.confirm('Delete album?')
             confirm ?
                 Axios.delete(apiBasePath + '/deletealbum/' + id)
-                    .then(
-                        () => getAlbums(sort.field, sort.direction)
-                    )
+                    .then(() => getAlbums(sort.field, sort.direction))
                     .catch(() => window.alert('Server error'))
                 : void (0)
         }
+        //handles submitting a rating
         const handleSubmit = (event, albumid, rating) => {
             event.preventDefault()
             if (rating < 0 || rating > 10) {
@@ -124,8 +129,10 @@ function Main() {
                     .catch(() => window.alert('Server error'))
             }
         }
+        //controlling the box shadow effect using state changes
         const onHover = blockRef => setShadowState(`5px 5px 5px ${album.album.albumcoverimg_color3}`)
         const onLeave = blockRef => setShadowState("")
+        //returns the block - styling is inline and pulls from rgb strings stored in database on upload of image files
         return (
             <div
                 className="block"
@@ -145,6 +152,7 @@ function Main() {
                 <div className="columns is-vcentered">
                     <div className="column is-2 has-text-centered">
                         <img
+                            //getting the image from S3
                             src={'https://s3.amazonaws.com/album-ratings-backend-heroku-files/' + album.album.albumcoverimg}
                             alt="cover"
                             width="90%"
@@ -173,6 +181,7 @@ function Main() {
                                         step="0.1"
                                         value={ratings[index] + ''}
                                         onChange={e => handleChange(index, e.target.value)}
+                                        //true if demo user and this album was added by a real user, false otherwise
                                         disabled={setDisabledInputs(album.album.addedbypersonid)}
                                         ref={inputRef}
                                     />
@@ -269,7 +278,9 @@ function Main() {
         )
     }
 
+    //this component is the full list of albums
     const AlbumList = ({ albums }) => {
+        //all ratings on the page are stored in an array, and updates on the front end are handled in the ratings state
         const [ratings, setRatings] = useState(albums.map(album => album.album.rating))
         const handleChange = (index, newRating) => {
             const newRatings = [...ratings]

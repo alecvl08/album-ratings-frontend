@@ -28,6 +28,7 @@ function EditAlbum() {
         }
     )
 
+    //on page load get the album to be edited by its ID and pre-populate the fields
     useEffect(
         () => {
             Axios.get(apiBasePath + '/getalbum/' + id)
@@ -108,7 +109,7 @@ function EditAlbum() {
             )
             .catch(
                 err => {
-                    console.log(err)
+                    //custom catch for one known error
                     if (err.response.data.message === 'Possible corrupted or invalid image; please try another') {
                         window.alert('Server error: ' + err.response.data.message)
                     } else {
