@@ -16,11 +16,13 @@ function Login() {
         Axios.get(apiBasePath + '/getlogin/' + input)
             .then(
                 res => {
-                    localStorage.setItem('personid', JSON.stringify(res.data.personid))
-                    navigate('/')
+                    if (res.data[0].personid) {
+                        localStorage.setItem('personid', JSON.stringify(res.data[0].personid))
+                        navigate('/')
+                    }
                 }
             )
-            .catch(err => console.log(err))
+            .catch(() => window.alert('Server error'))
     }
 
     const demoMode = () => {

@@ -59,6 +59,7 @@ function Main() {
                     setAlbumsList(albums)
                 }
             )
+            .catch(() => window.alert('Server error'))
     }
     useEffect(() => getAlbums(sort.field, sort.direction),[sort])
     const RatingsTable = ({ albumid, ratings, color1, color2, color3 }) => {
@@ -103,7 +104,10 @@ function Main() {
             var confirm = window.confirm('Delete album?')
             confirm ?
                 Axios.delete(apiBasePath + '/deletealbum/' + id)
-                    .then(() => getAlbums(sort.field, sort.direction))
+                    .then(
+                        () => getAlbums(sort.field, sort.direction)
+                    )
+                    .catch(() => window.alert('Server error'))
                 : void (0)
         }
         const handleSubmit = (event, albumid, rating) => {
@@ -117,6 +121,7 @@ function Main() {
             else {
                 Axios.put(apiBasePath + '/updatescore/' + personid + '/' + albumid + '/' + rating)
                     .then(() => getAlbums(sort.field, sort.direction))
+                    .catch(() => window.alert('Server error'))
             }
         }
         const onHover = blockRef => setShadowState(`5px 5px 5px ${album.album.albumcoverimg_color3}`)

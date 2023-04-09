@@ -74,19 +74,26 @@ function AddAlbum() {
                 headers: {
                     "Content-Type": 'multipart/form-data'
                 }
-            }
-            
+            } 
         )
             .then(
-                res => {
-                    console.log(res)
+                () => {
                     var confirm = window.confirm('Album added')
                     confirm ?
                         navigate('/')
                     : void (0)
                 }
             )
-            .catch(err => console.log(err))
+            .catch(
+                err => {
+                    console.log(err)
+                    if (err.response.data.message === 'Possible corrupted or invalid image; please try another') {
+                        window.alert('Server error: ' + err.response.data.message)
+                    } else {
+                        window.alert('Server error')
+                    }
+                }
+            )
     }
     
 

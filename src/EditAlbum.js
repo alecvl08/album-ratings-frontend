@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
-import axios from 'axios'
 import apiBasePath from './globalVars'
 
 function EditAlbum() {
@@ -46,6 +45,7 @@ function EditAlbum() {
                         )
                     }
                 )
+                .catch(() => window.alert('Server error'))
         },
         []
     )
@@ -89,7 +89,7 @@ function EditAlbum() {
         if (formData.coverImageName !== 'Current File') {
             formDataObj.append('coverImage',formData.coverImage)
         }
-        axios.post(
+        Axios.post(
             apiBasePath + '/editalbum',
             formDataObj,
             {
@@ -99,15 +99,23 @@ function EditAlbum() {
             }
         )
             .then(
-                res => {
-                    console.log(res)
+                () => {
                     var confirm = window.confirm('Album updated')
                     confirm ?
                         navigate('/')
                     : void (0)
                 }
             )
-            .catch(err => console.log(err))
+            .catch(
+                err => {
+                    console.log(err)
+                    if (err.response.data.message === 'Possible corrupted or invalid image; please try another') {
+                        window.alert('Server error: ' + err.response.data.message)
+                    } else {
+                        window.alert('Server error')
+                    }
+                }
+            )
     }
 
     return (
