@@ -102,7 +102,7 @@ function Main() {
 
     //Component for each album block on the page
     const Album = ({ album, index, ratings, handleChange, handleReset }) => {
-        const inputRef = useRef()
+        
         const blockRef = useRef()
         const [shadowState, setShadowState] = useState("")
 
@@ -201,7 +201,6 @@ function Main() {
                                         onChange={e => handleChange(index, e.target.value)}
                                         //true if demo user and this album was added by a real user, false otherwise
                                         disabled={setDisabledInputs(album.album.addedbypersonid)}
-                                        ref={inputRef}
                                     />
                                 </div>
                             </div>
@@ -228,7 +227,7 @@ function Main() {
                                             <input
                                                 className="input"
                                                 type="reset"
-                                                onClick={() => handleReset(index, inputRef)}
+                                                onClick={() => handleReset(index)}
                                                 disabled={setDisabledInputs(album.album.addedbypersonid)}
                                                 style={{ color: album.album.albumcoverimg_color1 }}
                                             />
@@ -304,14 +303,12 @@ function Main() {
             const newRatings = [...ratings]
             newRatings[index] = newRating
             setRatings(newRatings)
-            console.log(ratings)
         }
-        const handleReset = (index, inputRef) => {
+        const handleReset = index => {
             setRatings(
                 ratings => {
                     const newRatings = [...ratings]
                     newRatings[index] = albums[index].album.rating
-                    inputRef.current.value = undefined
                     return newRatings
                 }
             )
