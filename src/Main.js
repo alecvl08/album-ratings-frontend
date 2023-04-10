@@ -12,8 +12,9 @@ function Main() {
     )
 
     //this state is a timestamp that marks the unique "instance" of the albums list which is part of the redis cache's key for an album list
-    const [albumListInstance, setAlbumsListInstance] = useState(Date.now())
-    
+    let albumListInstance = Date.now()
+    const resetAlbumListInstance = () => {albumListInstance = Date.now()}
+
     const handleSortChange = e => {
         setSort(
             {
@@ -118,8 +119,8 @@ function Main() {
                 Axios.delete(apiBasePath + '/deletealbum/' + id)
                     .then(
                         () => {
-                            //albumsListInstance is reset when deleting an album
-                            setAlbumsListInstance(Date.now())
+                            //album list instance is reset when deleting an album
+                            resetAlbumListInstance()
                             getAlbums(sort.field, sort.direction, albumListInstance)
                         }
                     )
@@ -140,7 +141,7 @@ function Main() {
                     .then(
                         () => {
                             //albums list instance is reset for updating a score
-                            setAlbumsListInstance(Date.now())
+                            resetAlbumListInstance()
                             getAlbums(sort.field, sort.direction, albumListInstance)
                         }
                     )
