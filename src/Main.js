@@ -304,6 +304,7 @@ function Main() {
             const newRatings = [...ratings]
             newRatings[index] = newRating
             setRatings(newRatings)
+            console.log(ratings)
         }
         const handleReset = (index, inputRef) => {
             setRatings(
