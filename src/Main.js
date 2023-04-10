@@ -10,6 +10,10 @@ function Main() {
             direction: "desc"
         }
     )
+
+    //this state is a timestamp that marks the unique "instance" of the albums list which is part of the redis cache's key for an album list
+    const [albumListInstance, setAlbumsListInstance] = useState(Date.now())
+    
     const handleSortChange = e => {
         setSort(
             {
@@ -42,14 +46,17 @@ function Main() {
         }
     }
 
-    //if localStorage has personid 'null' on page load, navigate to the login
-    const logout = personid => {if(personid === 'null') {navigate('/login')}}
-    useEffect(() => logout(personid),[])
+    //if localStorage has personid 'null' on page load, navigate to the login. Else get the album list
+    const logoutOrGetAlbums = personid => {
+        if (personid === 'null') {navigate('/login')}
+        else {getAlbums(sort.field, sort.direction, albumListInstance)}
+    }
+    useEffect(() => logoutOrGetAlbums(personid),[sort])
 
     //getAlbums is the driver of this page - called on any sort change or data update - gets list of albums and their ratings
     const [albumsList, setAlbumsList] = useState([])
-    const getAlbums = (sortField, sortDirection) => {
-        Axios.get(apiBasePath + '/getalbums/' + personid + "/" + sortField + "/" + sortDirection)
+    const getAlbums = (sortField, sortDirection, albumListInstance) => {
+        Axios.get(apiBasePath + '/getalbums/' + personid + "/" + sortField + "/" + sortDirection + '/' + albumListInstance)
             .then(
                 res => {
                     let albums = []
@@ -64,7 +71,6 @@ function Main() {
             )
             .catch(() => window.alert('Server error'))
     }
-    useEffect(() => getAlbums(sort.field, sort.direction),[sort])
 
     //This component is the scrollable ratings table for each album
     const RatingsTable = ({ albumid, ratings, color1, color2, color3 }) => {
@@ -110,7 +116,13 @@ function Main() {
             var confirm = window.confirm('Delete album?')
             confirm ?
                 Axios.delete(apiBasePath + '/deletealbum/' + id)
-                    .then(() => getAlbums(sort.field, sort.direction))
+                    .then(
+                        () => {
+                            //albumsListInstance is reset when deleting an album
+                            setAlbumsListInstance(Date.now())
+                            getAlbums(sort.field, sort.direction, albumListInstance)
+                        }
+                    )
                     .catch(() => window.alert('Server error'))
                 : void (0)
         }
@@ -125,7 +137,13 @@ function Main() {
             }
             else {
                 Axios.put(apiBasePath + '/updatescore/' + personid + '/' + albumid + '/' + rating)
-                    .then(() => getAlbums(sort.field, sort.direction))
+                    .then(
+                        () => {
+                            //albums list instance is reset for updating a score
+                            setAlbumsListInstance(Date.now())
+                            getAlbums(sort.field, sort.direction, albumListInstance)
+                        }
+                    )
                     .catch(() => window.alert('Server error'))
             }
         }
