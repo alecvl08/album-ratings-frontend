@@ -305,13 +305,9 @@ function Main() {
             setRatings(newRatings)
         }
         const handleReset = index => {
-            setRatings(
-                ratings => {
-                    const newRatings = [...ratings]
-                    newRatings[index] = albums[index].album.rating
-                    return newRatings
-                }
-            )
+            const newRatings = [...ratings]
+            newRatings[index] = albums[index].album.rating
+            setRatings(newRatings)
         }
         return (
             <>
