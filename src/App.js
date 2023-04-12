@@ -1,7 +1,7 @@
 import AddAlbum from './AddAlbum'
 import Main from './Main'
 import EditAlbum from './EditAlbum'
-import Login from './login'
+import Login from './Login'
 import { Routes, Route } from 'react-router-dom'
 
 function App() {
