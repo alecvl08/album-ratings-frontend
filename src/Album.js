@@ -4,7 +4,7 @@ import { Link }  from 'react-router-dom'
 import Axios from 'axios'
 
 //Component for each album block on the page
-const Album = ({ album, getAlbums, albumListInstance, resetAlbumListInstance, personid, sort, apiBasePath }) => {
+const Album = ({ album, resetAlbumListInstance, personid, apiBasePath }) => {
     
     const [rating, setRating] = useState(album.rating)
 
@@ -26,9 +26,8 @@ const Album = ({ album, getAlbums, albumListInstance, resetAlbumListInstance, pe
             Axios.delete(apiBasePath + '/deletealbum/' + id)
                 .then(
                     () => {
-                        //album list instance is reset when deleting an album
+                        //album list is reset when deleting an album
                         resetAlbumListInstance()
-                        getAlbums(sort.field, sort.direction, albumListInstance)
                     }
                 )
                 .catch(() => window.alert('Server error'))
@@ -47,9 +46,8 @@ const Album = ({ album, getAlbums, albumListInstance, resetAlbumListInstance, pe
             Axios.put(apiBasePath + '/updatescore/' + personid + '/' + albumid + '/' + rating)
                 .then(
                     () => {
-                        //albums list instance is reset for updating a score
+                        //albums list is reset for updating a score
                         resetAlbumListInstance()
-                        getAlbums(sort.field, sort.direction, albumListInstance)
                     }
                 )
                 .catch(() => window.alert('Server error'))

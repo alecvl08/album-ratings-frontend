@@ -45,7 +45,7 @@ function Main() {
         if (personid === 'null') {navigate('/login')}
         else {getAlbums(sort.field, sort.direction, albumListInstance)}
     }
-    useEffect(() => logoutOrGetAlbums(personid), [sort])
+    useEffect(() => logoutOrGetAlbums(personid), [sort, albumListInstance])
 
     //getAlbums is the driver of this page - called on any sort change or data update - gets list of albums and their ratings
     const [albumsList, setAlbumsList] = useState([])
@@ -114,11 +114,7 @@ function Main() {
                         <Album
                             key={album.albumid}
                             album={album}
-                            getAlbums={getAlbums}
-                            albumListInstance={albumListInstance}
-                            resetAlbumListInstance={resetAlbumListInstance}
                             personid={personid}
-                            sort={sort}
                             apiBasePath={apiBasePath}
                         />
                     )
