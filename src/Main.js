@@ -114,6 +114,7 @@ function Main() {
                         <Album
                             key={album.albumid}
                             album={album}
+                            resetAlbumListInstance={resetAlbumListInstance}
                             personid={personid}
                             apiBasePath={apiBasePath}
                         />
