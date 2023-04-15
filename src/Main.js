@@ -6,12 +6,11 @@ import Album from './Album'
 
 function Main() {
     const [sort, setSort] = useState({field: "addeddate", direction: "desc"})
+    const handleSortChange = e => setSort({...sort, [e.target.name]: e.target.value})
 
     //this state is a timestamp that marks the unique "instance" of the albums list which is part of the redis cache's key for an album list
     const [albumListInstance, setAlbumListInstance] = useState(Date.now())
-    const resetAlbumListInstance = () => {setAlbumListInstance(Date.now())}
-
-    const handleSortChange = e => {setSort({...sort, [e.target.name]: e.target.value})}
+    const resetAlbumListInstance = () => setAlbumListInstance(Date.now())
 
     const personid = localStorage.getItem('personid')
 

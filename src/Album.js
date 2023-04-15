@@ -7,7 +7,6 @@ import Axios from 'axios'
 const Album = ({ album, resetAlbumListInstance, personid, apiBasePath }) => {
     
     const [rating, setRating] = useState(album.rating)
-
     const handleChange = event => setRating(event.target.value)
     const handleReset = () => setRating(album.rating)
 
@@ -19,17 +18,14 @@ const Album = ({ album, resetAlbumListInstance, personid, apiBasePath }) => {
         if (personid == -1 && addedbypersonid != -1) {return true}
         else {return false}
     }
+
     //handles deleting an album and refreshing the list
     const deletealbum = id => {
         var confirm = window.confirm('Delete album?')
         confirm ?
             Axios.delete(apiBasePath + '/deletealbum/' + id)
-                .then(
-                    () => {
-                        //album list is reset when deleting an album
-                        resetAlbumListInstance()
-                    }
-                )
+                //album list is reset when deleting an album
+                .then(() => resetAlbumListInstance())
                 .catch(() => window.alert('Server error'))
             : void (0)
     }
@@ -44,12 +40,8 @@ const Album = ({ album, resetAlbumListInstance, personid, apiBasePath }) => {
         }
         else {
             Axios.put(apiBasePath + '/updatescore/' + personid + '/' + albumid + '/' + rating)
-                .then(
-                    () => {
-                        //albums list is reset for updating a score
-                        resetAlbumListInstance()
-                    }
-                )
+                //albums list is reset for updating a score
+                .then(() => resetAlbumListInstance())
                 .catch(() => window.alert('Server error'))
         }
     }
