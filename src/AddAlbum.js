@@ -246,6 +246,14 @@ function AddAlbum() {
                                 </div>
                             </div>
                         </div>
+                        <div className="field is-horizontal">
+                            <div className="field-label is-normal"></div>
+                            <div className="field-body">
+                                <a className="button is-primary" href="https://album-cover-search.alecvanlandingham.com/" target="_blank">
+                                    New! Album Cover Search (New Tab)
+                                </a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
