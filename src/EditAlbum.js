@@ -219,7 +219,7 @@ function EditAlbum() {
                                 <label className="label">Release Date:</label>
                             </div>
                             <div className="field-body">
-                                <div className="field">
+                                <div className="field is-narrow">
                                     <div className="control">
                                         <input
                                             className="input"
