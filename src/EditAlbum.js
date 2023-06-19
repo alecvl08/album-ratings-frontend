@@ -14,6 +14,8 @@ function EditAlbum() {
     const logout = personid => {if(personid === 'null') {navigate('/login')}}
     useEffect(() => logout(personid),[])
 
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
     const { id } = useParams()
     const [formData, setFormData] = useState(
         {
@@ -79,6 +81,7 @@ function EditAlbum() {
 
     const handleSubmit = event => {
         event.preventDefault()
+        setIsSubmitting(true)
         let formDataObj = new FormData()
         formDataObj.append('albumid',id)
         formDataObj.append('artist',formData.artist)
@@ -100,6 +103,7 @@ function EditAlbum() {
         )
             .then(
                 () => {
+                    setIsSubmitting(false)
                     var confirm = window.confirm('Album updated')
                     confirm ?
                         navigate('/')
@@ -108,6 +112,7 @@ function EditAlbum() {
             )
             .catch(
                 err => {
+                    setIsSubmitting(false)
                     //custom catch for one known error
                     if (err.response.data.message === 'Possible corrupted or invalid image; please try another') {
                         window.alert('Server error: ' + err.response.data.message)
@@ -271,9 +276,14 @@ function EditAlbum() {
                         <div className="field is-horizontal">
                             <div className="field-label is-normal"></div>
                             <div className="field-body">
-                                <a className="button is-primary" href={`https://album-cover-search.alecvanlandingham.com?artistParam=${formData.artist}&albumParam=${formData.title}`} target="_blank">
-                                    New! Album Cover Search (New Tab)
-                                </a>
+                                <div className="field is-grouped is-grouped-left">
+                                    <a className="button is-primary" href={`https://album-cover-search.alecvanlandingham.com?artistParam=${formData.artist}&albumParam=${formData.title}`} target="_blank">
+                                        New! Album Cover Search (New Tab)
+                                    </a>
+                                </div>
+                                <div className="field is-grouped is-grouped-right">
+                                    {isSubmitting && <div>Loading...</div>}
+                                </div>
                             </div>
                         </div>
                     </form>
