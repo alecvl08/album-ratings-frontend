@@ -12,7 +12,7 @@ function Main() {
     const [albumListInstance, setAlbumListInstance] = useState(Date.now())
     const resetAlbumListInstance = () => setAlbumListInstance(Date.now())
 
-    const personid = localStorage.getItem('personid')
+    const personid = replace(localStorage.getItem('personid'))
 
     const navigate = useNavigate()
 
@@ -41,7 +41,7 @@ function Main() {
 
     //if localStorage has personid 'null' on page load, navigate to the login. Else get the album list
     const logoutOrGetAlbums = personid => {
-        if (personid === 'null') {navigate('/login')}
+        if (personid === 'null' || personid === null) {navigate('/login')}
         else {getAlbums(sort.field, sort.direction, albumListInstance)}
     }
     useEffect(() => logoutOrGetAlbums(personid), [sort, albumListInstance])
