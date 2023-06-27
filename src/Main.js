@@ -12,7 +12,7 @@ function Main() {
     const [albumListInstance, setAlbumListInstance] = useState(Date.now())
     const resetAlbumListInstance = () => setAlbumListInstance(Date.now())
 
-    const personid = replace(localStorage.getItem('personid'))
+    const personid = localStorage.getItem('personid')
 
     const navigate = useNavigate()
 
